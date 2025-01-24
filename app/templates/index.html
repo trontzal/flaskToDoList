@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask ToDo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <h1>Todo List</h1>
+
+    <!-- Formulario para agregar una nueva tarea -->
+    <form action="/add" method="POST">
+        <input type="text" name="title" placeholder="New task" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <ul>
+        {% for todo in todos %}
+            <li>
+                <input type="checkbox" {% if todo.done %} checked {% endif %}> 
+                {{ todo.title }}
+            </li>
+        {% else %}
+            <li>No tasks yet!</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

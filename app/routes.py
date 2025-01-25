@@ -24,3 +24,12 @@ def check(id):
         db.session.commit()
         return jsonify({"success": True, "id": id, "done": todo.done}), 200
     return jsonify({"success": False, "message": "Todo not found"}), 404
+
+@app.route("/delete/<id>", methods = ["DELETE"])
+def erase(id):
+    todo = Todo.query.get(id)
+    if(todo):
+        db.session.delete(todo)
+        db.session.commit()
+        return redirect(url_for("home"))
+    return "Todo not found", 404

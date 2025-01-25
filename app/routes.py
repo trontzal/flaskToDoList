@@ -1,6 +1,6 @@
 from app import app, db
 from app.models import Todo
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, jsonify
 
 @app.route("/")
 def home():
@@ -22,4 +22,5 @@ def check(id):
     if(todo):
         todo.done = not todo.done
         db.session.commit()
-    return 
+        return jsonify({"success": True, "id": id, "done": todo.done}), 200
+    return jsonify({"success": False, "message": "Todo not found"}), 404

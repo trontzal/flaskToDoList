@@ -15,3 +15,11 @@ def add():
         db.session.add(new_todo)
         db.session.commit()
     return redirect(url_for('home'))
+
+@app.route("/check/<id>", methods=["PUT"])
+def check(id):
+    todo = Todo.query.get(id)
+    if(todo):
+        todo.done = not todo.done
+        db.session.commit()
+    return 

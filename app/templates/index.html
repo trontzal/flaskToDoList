@@ -18,7 +18,8 @@
     <ul>
         {% for todo in todos %}
             <li>
-                <input type="checkbox" {% if todo.done %} checked {% endif %}> 
+                <input type="checkbox" {% if todo.done %} checked {% endif %}
+                    onchange="toggleTodo('{{ todo.id }}')"> 
                 {{ todo.title }}
             </li>
         {% else %}
@@ -26,4 +27,25 @@
         {% endfor %}
     </ul>
 </body>
+
+<script>
+    
+    const toggleTodo = (id) =>{
+        fetch(`check/${id}`,{
+            method : 'PUT',
+            headers : {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.location.reload();
+        })
+        .catch(error => {
+            console.error('Error al actualizar el todo: ', error);
+        })
+
+    };
+
+</script>
 </html>
